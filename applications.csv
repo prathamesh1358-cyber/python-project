@@ -1,0 +1,4 @@
+ApplicantID,Name,Email,Address,Gender,Income,Credit_Score,Employment_Status,Loan_Type,Loan_Amount,Loan_Term,Documents,AI_Probability,Admin_Decision,Admin_Comments,Mobile
+1,Prathamesh Javaharlal Saner,,,Male,35000,650,Employed,Car,250000,36,['uploads/Car_1\\car_loan_documents.pdf'],0.49,Approved,,
+2,Javaharlal Shantaram Saner,,,Male,35000,670,Employed,Car,250000,36,['uploads/Car_2\\car_loan_documents.pdf'],0.48,Rejected,,
+3,Javaharlal Shantaram Saner,,,Male,35000,720,Employed,Car,250000,36,['uploads/Car_3\\car_loan_documents.pdf'],0.5,Approved,,
