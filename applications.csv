@@ -2,3 +2,9 @@ ApplicantID,Name,Email,Address,Gender,Income,Credit_Score,Employment_Status,Loan
 1,Prathamesh Javaharlal Saner,,,Male,35000,650,Employed,Car,250000,36,['uploads/Car_1\\car_loan_documents.pdf'],0.49,Approved,,
 2,Javaharlal Shantaram Saner,,,Male,35000,670,Employed,Car,250000,36,['uploads/Car_2\\car_loan_documents.pdf'],0.48,Rejected,,
 3,Javaharlal Shantaram Saner,,,Male,35000,720,Employed,Car,250000,36,['uploads/Car_3\\car_loan_documents.pdf'],0.5,Approved,,
+4,saurabh patil,saurabhpatil34@gmail.com,"at salvalde , tal nimdale ,dist amalner
+",Male,45000,650,Employed,Gold,150000,12,"['uploads/Gold_4\\gold_valuation_certificate_sample.pdf', 'uploads/Gold_4\\sample_id_saurabh_patil.pdf']",0.17,Rejected,"fraud documents,",8976564535.0
+5,chetan ishi ,chetanishi983@gmail.com ,"at post khalane ,tal shindkheda,dist dhule 
+",Male,50000,700,Employed,Education,150000,24,['uploads/Education_5\\Education_Loan_Required_Documents.pdf'],0.33,Rejected,"not given valid documents
+",9632446196.0
+6,,,,Male,0,0,Employed,Personal,0,1,[],0.57,Pending,,
