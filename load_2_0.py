@@ -16,41 +16,55 @@ from email.mime.multipart import MIMEMultipart
 # -------------------------
 SMTP_SERVER = "smtp.gmail.com"
 SMTP_PORT = 587
-SENDER_EMAIL = "prathambuissmca7@gmail.com"
-SENDER_PASSWORD = "kufdiickouvliyal"
+SENDER_EMAIL = "prathambuissmca7@gmail.com"        # <-- Replace with your Gmail
+SENDER_PASSWORD = "kufdiickouvliyal"        # <-- Replace with App Password
+
 def send_email(applicant_email, applicant_name, otp=None, decision=None, admin_comments=""):
     try:
         msg = MIMEMultipart("alternative")
         msg["From"] = SENDER_EMAIL
         msg["To"] = applicant_email
 
-        if otp:
-            msg["Subject"] = "Your OTP for Loan Application"
-            html_body = f"""
-            <html><body>
-            <p>Dear {applicant_name},</p>
-            <p>Your One-Time Password (OTP) for loan application verification is:</p>
-            <h2>{otp}</h2>
-            <p>Enter this OTP in the application to proceed.</p>
-            </body></html>
-            """
-        elif decision:
+        if decision:
             msg["Subject"] = f"Loan Application Status: {decision}"
             html_body = f"""
-            <html><body>
-            <p>Dear {applicant_name},</p>
-            <p>Your loan application has been <b>{decision}</b>.</p>
-            <p><b>Admin Comments:</b> {admin_comments if admin_comments else 'No additional comments provided.'}</p>
-            </body></html>
+            <html>
+            <body>
+                <p>Dear {applicant_name},</p>
+                <p>Your loan application has been <b>{decision}</b>.</p>
+                <p><b>Admin Comments:</b> {admin_comments if admin_comments else 'No additional comments provided.'}</p>
+                <p>Thank you for using our Loan Management System!</p>
+                <br>
+                <p><i>Loan Management Team</i></p>
+            </body>
+            </html>
+            """
+        elif otp:
+            msg["Subject"] = "Your OTP for Loan Application"
+            html_body = f"""
+            <html>
+            <body>
+                <p>Dear {applicant_name},</p>
+                <p>Your <b>One-Time Password (OTP)</b> for loan application verification is:</p>
+                <h2 style='color:blue;'>{otp}</h2>
+                <p>Please enter this OTP in the application to proceed.</p>
+                <br>
+                <p><i>Loan Management Team</i></p>
+            </body>
+            </html>
             """
         else:
             msg["Subject"] = "Loan Application Submitted Successfully"
             html_body = f"""
-            <html><body>
-            <p>Dear {applicant_name},</p>
-            <p>Your loan application has been submitted successfully.</p>
-            <p>We will review your application and notify you once a decision is made.</p>
-            </body></html>
+            <html>
+            <body>
+                <p>Dear {applicant_name},</p>
+                <p>Your loan application has been submitted successfully.</p>
+                <p>We will review your application and notify you once a decision is made.</p>
+                <br>
+                <p><i>Loan Management Team</i></p>
+            </body>
+            </html>
             """
 
         part = MIMEText(html_body, "html")
@@ -67,7 +81,6 @@ def send_email(applicant_email, applicant_name, otp=None, decision=None, admin_c
         st.error(f"Email sending failed: {e}")
         return False
 
-
 # -------------------------
 # 3. Page config
 # -------------------------
@@ -76,9 +89,9 @@ st.set_page_config(page_title="Loan Prediction App", layout="wide")
 # -------------------------
 # 4. Load Training Data
 # -------------------------
-train_csv_path = "loan_dataset_1000.csv"
+train_csv_path = "loan_dataset_1000.csv"  # Your dataset
 if not os.path.exists(train_csv_path):
-    st.error(f"{train_csv_path} not found!")
+    st.error(f"{train_csv_path} not found! Place CSV in the same folder.")
     st.stop()
 else:
     train_data = pd.read_csv(train_csv_path)
@@ -136,7 +149,10 @@ st.sidebar.title("Navigation")
 page = st.sidebar.radio("Go to", ["Applicant", "Admin"])
 
 # -------------------------
-# 8. Applicant Page with OTP first
+# 8. Applicant Page
+# -------------------------
+# -------------------------
+# 8. Applicant Page (Updated for OTP First)
 # -------------------------
 if page == "Applicant":
     st.title("💰 Loan Application")
@@ -158,6 +174,7 @@ if page == "Applicant":
             send_email(email, name, otp=otp)
             st.success(f"OTP sent to {email}. Please check your email.")
 
+    # Step 2: Verify OTP
     if "otp" in st.session_state:
         user_otp = st.text_input("Enter OTP sent to your email")
         if st.button("Verify OTP"):
@@ -167,8 +184,10 @@ if page == "Applicant":
             else:
                 st.error("OTP incorrect. Please try again.")
 
+    # Step 3: Show application form only after OTP verified
     if st.session_state.get("otp_verified", False):
         st.subheader("Step 2: Fill Loan Application Form")
+
         mobile = st.text_input("Mobile Number")
         address = st.text_area("Address")
         gender = st.radio("Gender", ["Male", "Female"])
@@ -190,7 +209,7 @@ if page == "Applicant":
         }
 
         loan_type = st.selectbox("Loan Type", list(loan_docs_required.keys()))
-        st.write(f"Required Documents for {loan_type} Loan:")
+        st.write(f"📄 Required Documents for {loan_type} Loan:")
         for doc in loan_docs_required[loan_type]:
             st.write(f"- {doc}")
         documents = st.file_uploader("Upload Required Documents", accept_multiple_files=True)
@@ -211,6 +230,7 @@ if page == "Applicant":
                 "Loan_Term": loan_term
             }
             ai_prob = predict_loan(input_model)
+
             new_app = pd.DataFrame([{
                 "ApplicantID": applicant_id,
                 "Name": name,
@@ -231,10 +251,12 @@ if page == "Applicant":
             }])
             df_apps = pd.concat([df_apps, new_app], ignore_index=True)
             df_apps.to_csv("applications.csv", index=False)
+            send_email(email, name)  # Confirmation email
             st.success(f"Application submitted! AI Probability: {ai_prob*100:.2f}%")
 
+
 # -------------------------
-# 9. Admin Page with Stats & Charts
+# 9. Admin Page
 # -------------------------
 elif page == "Admin":
     st.title("🧾 Admin Dashboard")
@@ -252,42 +274,21 @@ elif page == "Admin":
                 st.error("Wrong password!")
     else:
         if df_apps.empty:
-            st.info("No applications have been submitted yet.")
+            st.info("No applications submitted yet.")
         else:
-            # Statistical Analysis
-            st.subheader("Statistical Analysis")
-            col1, col2, col3 = st.columns(3)
-            total_apps = len(df_apps)
-            col1.metric("Total Applications", total_apps)
-            pending_count = (df_apps['Admin_Decision'] == 'Pending').sum()
-            col2.metric("Pending for Review", pending_count)
-            approved_count = (df_apps['Admin_Decision'] == 'Approved').sum()
-            approval_rate = (approved_count / total_apps) * 100 if total_apps > 0 else 0
-            col3.metric("Overall Approval Rate", f"{approval_rate:.2f}%")
-            st.markdown("---")
-            st.subheader("Distribution by Loan Type")
-            st.bar_chart(df_apps['Loan_Type'].value_counts())
-            st.subheader("Distribution of Admin Decisions")
-            st.bar_chart(df_apps['Admin_Decision'].value_counts())
-            st.markdown("---")
-
-            # Review Section
             st.subheader("All Applications")
             st.dataframe(df_apps)
-            st.subheader("Review and Decision")
+
             app_ids = df_apps['ApplicantID'].tolist()
             selected_id = st.selectbox("Select Applicant to Review:", app_ids)
             selected_app = df_apps[df_apps['ApplicantID'] == selected_id].iloc[0]
 
-            st.markdown(f"### Applicant ID: {selected_app['ApplicantID']}")
             st.text(f"Name: {selected_app['Name']}")
             st.text(f"Email: {selected_app['Email']}")
-            st.text(f"Mobile: {selected_app['Mobile']}")
             st.text(f"Loan Type: {selected_app['Loan_Type']}")
-            st.text(f"AI Predicted Approval Probability: {selected_app['AI_Probability']*100:.2f}%")
+            st.text(f"AI Probability: {selected_app['AI_Probability']*100:.2f}%")
             st.text(f"Current Decision: {selected_app['Admin_Decision']}")
-            
-            st.text("Documents Uploaded:")
+
             try:
                 docs_list = eval(selected_app['Documents'])
                 if docs_list:
@@ -299,10 +300,8 @@ elif page == "Admin":
                                 file_name=os.path.basename(f_path),
                                 mime="application/octet-stream"
                             )
-                else:
-                    st.info("No documents were uploaded for this application.")
-            except (SyntaxError, FileNotFoundError):
-                st.warning("No documents found or a format error occurred.")
+            except:
+                st.warning("No documents found.")
 
             current_decision = selected_app['Admin_Decision']
             decision = st.selectbox(
@@ -311,10 +310,17 @@ elif page == "Admin":
                 index=["Pending", "Approved", "Rejected"].index(current_decision)
             )
             comments = st.text_area("Update Comments:", value=selected_app['Admin_Comments'])
+
             if st.button("Submit Decision"):
                 idx = df_apps[df_apps['ApplicantID'] == selected_id].index[0]
                 df_apps.at[idx, "Admin_Decision"] = decision
                 df_apps.at[idx, "Admin_Comments"] = comments
                 df_apps.to_csv("applications.csv", index=False)
                 st.success(f"Decision for Applicant {selected_id} updated!")
+                send_email(
+                    applicant_email=selected_app['Email'],
+                    applicant_name=selected_app['Name'],
+                    decision=decision,
+                    admin_comments=comments
+                )
                 st.rerun()

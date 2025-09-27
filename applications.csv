@@ -8,3 +8,26 @@ ApplicantID,Name,Email,Address,Gender,Income,Credit_Score,Employment_Status,Loan
 ",Male,50000,700,Employed,Education,150000,24,['uploads/Education_5\\Education_Loan_Required_Documents.pdf'],0.33,Rejected,"not given valid documents
 ",9632446196.0
 6,,,,Male,0,0,Employed,Personal,0,1,[],0.57,Pending,,
+7,chetan ishi ,,"at post khalane ,tal shindkheda,dist dhule",Male,0,0,Employed,Car,150000,24,['uploads/Car_7\\Education_Loan_Required_Documents (1).pdf'],0.63,Rejected,fake documents,
+8,jayesh patil,jayesh23@gmail.com,"at post khalane ,tal shindkheda,dist dhule",Male,25000,670,Employed,Car,100000,24,['uploads/Car_8\\car_loan_documents.pdf'],0.4,Approved,"valid documents
+",8887756675.0
+9,,,,Male,0,0,Employed,Car,0,1,[],0.67,Rejected,,
+10,chetan ishi ,,4f,Male,1000,450,Unemployed,Marriage,100,1,['uploads/Marriage_10\\sample_id_saurabh_patil.pdf'],0.41,Pending,,
+11,chetan ishi ,,"at post khalane ,tal shindkheda,dist dhule",Male,67000,670,Employed,Gold,30000,34,"['uploads/Gold_11\\gold_valuation_certificate_sample.pdf', 'uploads/Gold_11\\Education_Loan_Required_Documents.pdf']",0.36,Rejected,"fake documents
+",
+12,dharmesh panpatil,dharmesh23@gmail.com,"AT POST SHIRPUR
+",Male,44998,700,Employed,Agriculture,30000,20,['uploads/Agriculture_12\\gold_valuation_certificate_sample (1).pdf'],0.23,Approved,good cibil score,8766565657.0
+13,dharmesh panpatil,dharmesh23@gmail.com,"AT POST SHIRPUR
+",Male,44998,700,Employed,Agriculture,30000,20,['uploads/Agriculture_13\\gold_valuation_certificate_sample (1).pdf'],0.23,Approved,,8766565657.0
+14,pratham  sanem,sanempratham@gmail.com,,Male,80000,760,Employed,Home,30000,36,['uploads/Home_14\\Pratham_Sanem_Home_Loan_Documents.pdf'],0.24,Approved,"good cibil score , and valid documents mentioned 
+
+",9632446196.0
+15,parag kotkar ,paragbca24@gmail.com,"AT POST HATED kh 
+ TAL CHOPDA DISTRICT JALGOAN",Male,80000,650,Employed,Business,25000,12,['uploads/Business_15\\Parag_Kotkar_Business_Loan_Documents (3).pdf'],0.36,Rejected,"good civil score ,  we will  passed your loan in some working days 
+
+",8767339526.0
+16,ajay sonar ,devanandsonar787@gmail.com,at NARDHANA,Male,86000,0,Employed,Marriage,230000,20,['uploads/Marriage_16\\gold_valuation_certificate_sample (1).pdf'],0.45,Rejected,INVALID DOCUMENTS ,8776576473.0
+17,TEJAL  PATIL ,tejalpatil2711@gmail.com,"AT SHIRPUR 
+",Female,400000,700,Employed,Medical,49090,20,['uploads/Medical_17\\gold_valuation_certificate_sample.pdf'],0.45,Approved,"good civil score
+",7364376467.0
+18,sushil pawar ,sanempratham@gmail.com,AT POST SHIRPUR,Male,35000,600,Employed,Car,45000,18,['uploads/Car_18\\car_loan_documents.pdf'],0.31,Approved,,6756456578.0
